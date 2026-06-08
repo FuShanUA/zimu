@@ -1,0 +1,17 @@
+# Ignore local compiled macOS app bundles
+*.app/
+
+# Ignore PyInstaller build artifacts
+build/
+dist/
+
+# Ignore local logs and caches
+logs/
+__pycache__/
+*.pyc
+
+# Ignore python virtual environments
+.venv/
+
+# Ignore local state files
+autosub_batch_cmd.json

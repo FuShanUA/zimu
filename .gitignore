@@ -1,0 +1,28 @@
+# Virtual environment
+.venv/
+Library/Tools/autosub/.venv/
+
+# Python cache
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+workflow.log
+
+# Project locks and temporary files
+*.lock
+.burn_complete
+
+# OS generated
+.DS_Store
+
+# Build artifacts
+build/
+dist/
+*.spec
+
+# Local environment variables
+.env
+

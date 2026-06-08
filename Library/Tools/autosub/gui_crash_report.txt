@@ -1,0 +1,11 @@
+Crash Time: 2026-04-24T16:25:04.404644
+Error: 'AutoSubGUI' object has no attribute 'start_process'
+
+Traceback (most recent call last):
+  File "d:\cc\Library\Tools\autosub\autosub_gui.py", line 824, in <module>
+    app = AutoSubGUI(root)
+          ^^^^^^^^^^^^^^^^
+  File "d:\cc\Library\Tools\autosub\autosub_gui.py", line 325, in __init__
+    self.start_btn = ttk.Button(action_frame, text="开始处理 (Start Process)", command=self.start_process)
+                                                                                       ^^^^^^^^^^^^^^^^^^
+AttributeError: 'AutoSubGUI' object has no attribute 'start_process'. Did you mean: 'stop_process'?

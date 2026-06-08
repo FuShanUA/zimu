@@ -1,0 +1,9 @@
+{
+  "hostname": "SS",
+  "cpu_count": 8,
+  "has_cuda": false,
+  "heavy_max": 2,
+  "api_pro_max": 20,
+  "api_flash_max": 100,
+  "io_max": 6
+}

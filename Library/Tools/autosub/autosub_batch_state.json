@@ -1,0 +1,31 @@
+{
+  "tasks": [
+    {
+      "uid": 1,
+      "vid_id": "dummy",
+      "url": "https://www.youtube.com/watch?v=dummy",
+      "display_title": "ID_tch_v=dummy",
+      "status": "ACTIVE (DL)",
+      "error": "",
+      "pcts": {
+        "DL": 0.0,
+        "TR": 0.0,
+        "TL": 0.0,
+        "MR": 0.0,
+        "BR": 0.0
+      },
+      "started_at": 1774746724.8507574,
+      "finished_at": null,
+      "pid": null,
+      "video_path": null,
+      "ass_path": null,
+      "is_manual_paused": false,
+      "is_manual_restarted": false,
+      "workdir": "d:\\cc\\Projects\\DevCon 5\\01_ID_tch_v=dummy_dummy",
+      "src_srt": null,
+      "zh_srt": null
+    }
+  ],
+  "global_pause": true,
+  "last_update": 1774746724.867377
+}
