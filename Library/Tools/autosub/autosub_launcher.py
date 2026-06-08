@@ -67,13 +67,13 @@ NODE_EXE = discover_node()
 
 BATCH_SCRIPT = os.path.join(CURRENT_DIR, "autosub_batch_pro.py")
 SINGLE_SCRIPT = os.path.join(CURRENT_DIR, "autosub.py")
-DEFAULT_OUTPUT_ROOT = r"/Users/shanfu/cc/Projects"
+DEFAULT_OUTPUT_ROOT = os.path.join(os.path.abspath(os.path.join(CURRENT_DIR, "..", "..")), "Projects")
 
 def discover_initial_cookies():
     """Finds cookies.txt in prioritized locations for the launcher."""
     paths = [
         os.path.join(CURRENT_DIR, "cookies.txt"),
-        r"/Users/shanfu/cc/cookies.txt",
+        os.path.abspath(os.path.join(CURRENT_DIR, "..", "..", "cookies.txt")),
         r"D:\download\cookies.txt",
         r"D:\Downloads\cookies.txt"
     ]

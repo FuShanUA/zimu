@@ -412,10 +412,11 @@ class TerminalGUI:
         
         # DEBUG: Dump the rendered text to a file for precise length/character analysis
         try:
-            with open("/Users/shanfu/cc/Library/Tools/autosub/gui_debug_text.txt", "w", encoding="utf-8") as df:
+            curr_dir = os.path.dirname(os.path.abspath(__file__))
+            with open(os.path.join(curr_dir, "gui_debug_text.txt"), "w", encoding="utf-8") as df:
                 df.write(new_text)
             # Dump styles as well
-            with open("/Users/shanfu/cc/Library/Tools/autosub/gui_debug_styles.txt", "w", encoding="utf-8") as sf:
+            with open(os.path.join(curr_dir, "gui_debug_styles.txt"), "w", encoding="utf-8") as sf:
                 for y, line_chars in enumerate(self.virtual_lines):
                     line_text = "".join(line_chars)
                     if "RUN" in line_text or "WAIT" in line_text:

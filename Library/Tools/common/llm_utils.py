@@ -16,14 +16,13 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 
 # Try to load keys from .env if present
 def get_env_path():
-    # Return the primary GUI-managed env file first
-    p = r"/Users/shanfu/cc/Library/.env"
-    if os.path.exists(p): return p
-    
-    # Global/Project .env files first
+    curr_dir = os.path.dirname(os.path.abspath(__file__))
     potentials = [
-        r"/Users/shanfu/cc/.env",
-        r"/Users/shanfu/cc/.baoyu-skills/.env"
+        os.path.abspath(os.path.join(curr_dir, "..", "..", "Library", ".env")),
+        os.path.abspath(os.path.join(curr_dir, "..", "..", ".env")),
+        os.path.expanduser("~/.baoyu-skills/.env"),
+        os.path.expanduser("~/cc/.env"),
+        os.path.expanduser("~/cc/Library/.env")
     ]
     for p in potentials:
         if os.path.exists(p): return p
@@ -33,7 +32,7 @@ def get_env_path():
         return os.path.join(USER_DATA_DIR, ".env")
 
     # Search upwards for .env starting from current file
-    curr = os.path.dirname(os.path.abspath(__file__))
+    curr = curr_dir
     while curr != os.path.dirname(curr): # Not at root
         potential = os.path.join(curr, ".env")
         if os.path.exists(potential): return potential
@@ -44,16 +43,20 @@ def get_env_path():
     return os.path.join(base_dir, ".env")
 
 ENV_PATH = get_env_path()
+TMP_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "tmp"))
 
 original_env = dict(os.environ)
 
 try:
     from dotenv import load_dotenv  # type: ignore
+    curr_dir = os.path.dirname(os.path.abspath(__file__))
     # Load all potential env files in cascade order (earlier ones are overridden by later ones)
     for p in [
-        r"/Users/shanfu/cc/.baoyu-skills/.env",
-        r"/Users/shanfu/cc/.env",
-        r"/Users/shanfu/cc/Library/.env"
+        os.path.expanduser("~/.baoyu-skills/.env"),
+        os.path.expanduser("~/cc/.env"),
+        os.path.abspath(os.path.join(curr_dir, "..", "..", ".env")),
+        os.path.abspath(os.path.join(curr_dir, "..", "..", "Library", ".env")),
+        os.path.expanduser("~/cc/Library/.env")
     ]:
         if os.path.exists(p):
             load_dotenv(p, override=True)
@@ -111,7 +114,7 @@ class LLMClient:
         }
 
         # Apply default gcloud application default credentials path if not specified
-        adc_path = "/Users/shanfu/.config/gcloud/application_default_credentials.json"
+        adc_path = os.path.expanduser("~/.config/gcloud/application_default_credentials.json")
         if not self.api_keys[LLMProvider.VERTEX] and os.path.exists(adc_path):
             self.api_keys[LLMProvider.VERTEX] = adc_path
 
@@ -131,10 +134,13 @@ class LLMClient:
         # Read .env sequentially to establish cascade order
         self.ordered_configs = []
         # Multi-env cascade loading: earlier ones are overwritten by later ones
+        curr_dir = os.path.dirname(os.path.abspath(__file__))
         env_cascade = [
-            r"/Users/shanfu/cc/.baoyu-skills/.env",
-            r"/Users/shanfu/cc/.env",
-            r"/Users/shanfu/cc/Library/.env"
+            os.path.expanduser("~/.baoyu-skills/.env"),
+            os.path.expanduser("~/cc/.env"),
+            os.path.abspath(os.path.join(curr_dir, "..", "..", ".env")),
+            os.path.abspath(os.path.join(curr_dir, "..", "..", "Library", ".env")),
+            os.path.expanduser("~/cc/Library/.env")
         ]
         parsed_keys = {}
         for p in env_cascade:
@@ -359,8 +365,8 @@ class LLMClient:
                     for part in candidate.content.parts:
                         if hasattr(part, 'inline_data') and part.inline_data:
                             if "image" in part.inline_data.mime_type:
-                                temp_path = os.path.join(r"/Users/shanfu/cc/tmp", f"gemini_out_{int(time.time()*1000)}.png")
-                                if not os.path.exists(r"/Users/shanfu/cc/tmp"): os.makedirs(r"/Users/shanfu/cc/tmp")
+                                temp_path = os.path.join(TMP_DIR, f"gemini_out_{int(time.time()*1000)}.png")
+                                if not os.path.exists(TMP_DIR): os.makedirs(TMP_DIR)
                                 with open(temp_path, "wb") as f:
                                     f.write(part.inline_data.data)
                                 return temp_path
@@ -422,8 +428,8 @@ class LLMClient:
                 for part in candidate.content.parts:
                     if hasattr(part, 'inline_data') and part.inline_data:
                         if "image" in part.inline_data.mime_type:
-                            temp_path = os.path.join(r"/Users/shanfu/cc/tmp", f"vertex_out_{int(time.time()*1000)}.png")
-                            if not os.path.exists(r"/Users/shanfu/cc/tmp"): os.makedirs(r"/Users/shanfu/cc/tmp")
+                            temp_path = os.path.join(TMP_DIR, f"vertex_out_{int(time.time()*1000)}.png")
+                            if not os.path.exists(TMP_DIR): os.makedirs(TMP_DIR)
                             with open(temp_path, "wb") as f:
                                     f.write(part.inline_data.data)
                             return temp_path
