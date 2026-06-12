@@ -303,7 +303,7 @@ class AutoSubGUI:
     def browse_folder(self): f = filedialog.askdirectory(); self.output_dir_var.set(f) if f else None
 
     def get_project_env_path(self):
-        return os.path.abspath(os.path.join(CURRENT_DIR, "..", "..", ".env"))
+        return os.path.abspath(os.path.join(CURRENT_DIR, "..", "..", "..", ".env"))
 
     def load_api_key(self, vendor, env_key=None):
         if not env_key:
